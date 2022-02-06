@@ -4,10 +4,7 @@ const {model} = mongoose
 
 const packagesScheam = new schema({
     name : '',
-    color : {
-        type :Number
-        //16비트
-    },
+    color : '',
     key : '',
 })
 

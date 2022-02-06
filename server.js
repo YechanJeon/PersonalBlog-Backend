@@ -5,8 +5,8 @@ const port = 80
 
 app.use(express.json())
 
-const {getPosts , getPost, getPinnedPosts , getPackages , getUserInfo} = require('./router/getInfos')
-const {postPost} = require('./router/postInfos')
+const {getPosts , getPost, getPostsByPackage , getPinnedPosts , getPackages , getUserInfo} = require('./router/getInfos')
+const {postPost , postPackage , postPinned} = require('./router/postInfos')
 
 const dbConfig = require('./controller/dbConfig')
 
@@ -14,11 +14,15 @@ dbConfig()
 
 app.use(getPosts)
 app.use(getPost)
+app.use(getPostsByPackage)
 app.use(getPinnedPosts)
 app.use(getPackages)
 app.use(getUserInfo)
 
 app.use(postPost)
+app.use(postPackage)
+app.use(postPinned)
+
 
 
 
@@ -26,6 +30,7 @@ app.use(postPost)
 // 
 
 const postModel = require('./models/postsModel')
+// const { getPostsByTags } = require('./controller/getInfos')
 
 app.delete('/post' , async (req,res) => {
     postModel.deleteMany().then(

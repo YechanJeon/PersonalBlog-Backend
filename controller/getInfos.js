@@ -12,22 +12,12 @@ module.exports = {
     getPost : async(req,res) => {
         res.send(await postsModel.findOne({key : +req.params.key}))
     },
-
-    getPostsByTag : async(req,res) => {
-        let tagPosts
-        req.body.tags.map(async (e) => {
-            await postModel.find({tags : e})
-        })
+    getPostsByPackage : async (req,res) => {
+        res.send(await postsModel.find({package : req.params.package}))
     },
 
     getPinnedPosts : async(req,res) => {
-        let pinnedPostLists = []
-        await (await pinnedPostsModel.find()).map(
-            async (e) => {
-                pinnedPostLists.push(await postModel.findOne({key : e['post-key']}))
-            }
-        )
-        res.send(pinnedPostLists)
+        res.send(await pinnedPostsModel.find())
     },
 
     getPackages : async(req,res) => {
