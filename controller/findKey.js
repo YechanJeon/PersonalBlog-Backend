@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
-
-module.exports = async (modelName) => {
-    if(await modelName.count() === 0){
+module.exports = async (dbModel) => {
+    if(await dbModel.find().count() === 0) { 
         return 1
     }else{
-        return ModelName.findOne().sort({ dateCreated: -1 }).key+1
+        return (await dbModel.findOne().sort({_id : -1})).key+1
     }
+
+    
 }

@@ -5,7 +5,7 @@ const model = mongoose.model
 const postSchema = new schema({
     title : '',
     package : '',
-    contents : '',
+    content : '',
     tags : [],
     date : '',
     description : '',

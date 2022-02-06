@@ -2,15 +2,12 @@ const mongoose = require('mongoose')
 
 const router = require('express').Router()
 
-const postsModel = require('../models/postsModel')
-const userInfoModel = require('../models/userInfoModel')
-const pinnedPostsModel = require('../models/pinnedPostsModel')
-const packagesModel = require('../models/packagesModel')
+const getInfos = require('../controller/getInfos')
 
 module.exports = {
-    getPinnedPost : router.get('/pinnedPost', 
-    async (req,res) =>{
-        res.json({ok : 1})
-        // await postModel.find({pinned : true})
-    })
+    getPosts : router.get('/posts' , getInfos.getPosts),
+    getPost : router.get('/post/:key' , getInfos.getPost),
+    getPinnedPosts : router.get('/pinnedPost' , getInfos.getPinnedPosts),
+    getPackages : router.get('packages' , getInfos.getPackages),
+    getUserInfo : router.get('userInfo/:userId' , getInfos.getUserInfo)
 }

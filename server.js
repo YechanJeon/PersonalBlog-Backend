@@ -1,23 +1,48 @@
 const express = require('express')
 
-const dbConfig = require('./controller/dbConfig')
-
-const app = express()  
-
+const app = express()
 const port = 80
 
-const getInfos = require('./router/getInfos')
+app.use(express.json())
 
-const {getPinnedPost} = require('./router/getInfos')
+const {getPosts , getPost, getPinnedPosts , getPackages , getUserInfo} = require('./router/getInfos')
+const {postPost} = require('./router/postInfos')
 
+const dbConfig = require('./controller/dbConfig')
 
 dbConfig()
 
-app.use(getPinnedPost)
+app.use(getPosts)
+app.use(getPost)
+app.use(getPinnedPosts)
+app.use(getPackages)
+app.use(getUserInfo)
+
+app.use(postPost)
+
+
+
+
+// 
+
+const postModel = require('./models/postsModel')
+
+app.delete('/post' , async (req,res) => {
+    postModel.deleteMany().then(
+        res.status(200)
+    ).catch(
+        res.status(400)
+    )
+})
+
+
+// 
+
 
 app.get('/' , (req,res) => {
     res.json({ok : 1})
 })
+
 
 // app.use(getprofileInfo)
 // app.use(getpinnedPosts)
