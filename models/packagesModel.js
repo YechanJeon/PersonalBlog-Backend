@@ -5,6 +5,7 @@ const {model} = mongoose
 const packagesScheam = new schema({
     name : '',
     color : '',
+    description : '',
     key : '',
 })
 

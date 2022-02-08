@@ -1,12 +1,20 @@
 const express = require('express')
+const cors = require('cors')
+const multer = require('multer')
+// const fileUpload = require('express-fileupload');
+const fs = require('fs')
+
+const upload = multer({ dest: 'uploads/' })
 
 const app = express()
 const port = 80
 
 app.use(express.json())
+app.use(cors())
+// app.use(fileUpload())
 
-const {getPosts , getPost, getPostsByPackage , getPinnedPosts , getPackages , getUserInfo} = require('./router/getInfos')
-const {postPost , postPackage , postPinned} = require('./router/postInfos')
+const {getPosts , getPost, getPostsByPackage , getPinnedPosts , getPackages , getPackage , getUserInfo} = require('./router/getInfos')
+const {postPost , postPackage, postSavePost , postPinned} = require('./router/postInfos')
 
 const dbConfig = require('./controller/dbConfig')
 
@@ -17,14 +25,13 @@ app.use(getPost)
 app.use(getPostsByPackage)
 app.use(getPinnedPosts)
 app.use(getPackages)
+app.use(getPackage)
 app.use(getUserInfo)
 
 app.use(postPost)
+app.use(postSavePost)
 app.use(postPackage)
 app.use(postPinned)
-
-
-
 
 
 // 

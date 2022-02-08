@@ -17,11 +17,25 @@ module.exports = {
     },
 
     getPinnedPosts : async(req,res) => {
-        res.send(await pinnedPostsModel.find())
+        // res.send(await pinnedPostsModel.find())
+
+
+        const pinnedPostsModelFind = await pinnedPostsModel.find()
+
+        res.send(await Promise.all(pinnedPostsModelFind.map(async (e) => {
+            let pinnedPost = await postsModel.findOne({key : e["post-key"]})
+            pinnedPost.key = e.key
+            return pinnedPost
+        })))
+        
+
     },
 
     getPackages : async(req,res) => {
         res.send(await packagesModel.find())
+    },
+    getPackage: async(req,res) =>{
+        res.send(await packagesModel.findOne({key : +req.params.key}))
     },
 
     getUserInfo : async(req,res) => {
