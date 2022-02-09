@@ -3,6 +3,8 @@ const userInfoModel = require('../models/userInfoModel')
 const pinnedPostsModel = require('../models/pinnedPostsModel')
 const packagesModel = require('../models/packagesModel')
 
+const savedPostsModel = require('../models/savedPostsModel')
+
 
 module.exports = {
     getPosts : async(req,res) => {
@@ -14,6 +16,10 @@ module.exports = {
     },
     getPostsByPackage : async (req,res) => {
         res.send(await postsModel.find({package : req.params.package}))
+    },
+
+    getSavedPosts : async(req,res) => {
+        res.send(await savedPostsModel.find())
     },
 
     getPinnedPosts : async(req,res) => {

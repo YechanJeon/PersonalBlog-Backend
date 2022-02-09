@@ -10,17 +10,22 @@ const fs = require('fs')
 
 module.exports = {
     postPost : async (req,res) => {
+
         let newPost = new postsModel
-        if(req.body.title === '' , req.body.package === '' , req.body.content === ''){
+        if(req.body.title === ''&&req.body.package === ''){
             res.status(400).json({
                 ok : 0,
                 msg : '빈값이 존재합니다.'
             })
         }else{
+            if(req.file){
+                newPost.content = fs.readFileSync(req.file.path , 'utf8')
+            }else{
+                newPost.content = req.body.content
+            }
             newPost.title = req.body.title 
             newPost.package = req.body.package
-            newPost.content = req.body.content
-            newPost.tags = req.body.tags
+            newPost.tags = JSON.parse(req.body.tags)
             newPost.description = req.body.description
             
             const newPostPackage = await packagesModel.findOne({key : +req.body.package})
@@ -45,7 +50,6 @@ module.exports = {
             })
         }
 
-
     },
     postSavePost : async(req,res) => {
         let savePost = {}
@@ -53,8 +57,35 @@ module.exports = {
         if(req.file){   
             savePost.content = fs.readFileSync(req.file.path , 'utf8')
         }
-        console.log(savePost)
-        console.log('asdf')
+        let savePostModel = new savedPostsModel
+
+
+        savePostModel.title = savePost.title
+        savePostModel.package = savePost.package
+        savePostModel.content = savePost.content
+        savePostModel.fileName = savePost.fileName
+        savePostModel.tags = JSON.parse(savePost.tags)
+        savePostModel.description = savePost.description
+
+        const savePostPackage = await packagesModel.findOne({key : +savePost.package})
+        savePostModel.packageName = savePostPackage.name
+        savePostModel.packageColor = savePostPackage.color
+
+        savePostModel.key = await findKey(savedPostsModel)
+        // save
+
+        savePostModel.save(err => {
+            if(err){
+                res.status(400).json({
+                    ok : 0,
+                    msg : "저장중 에러"
+                })
+            }else{
+                res.status(200).json({
+                    ok : 1,
+                })
+            }
+        })
     },
     postPackage : async (req,res) => {
         let newPackage = new packagesModel
