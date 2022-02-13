@@ -10,6 +10,7 @@ const fs = require('fs')
 
 module.exports = {
     postPost : async (req,res) => {
+        console.log(req.body)
 
         let newPost = new postsModel
         if(req.body.title === ''&&req.body.package === ''){
@@ -52,8 +53,11 @@ module.exports = {
 
     },
     postSavePost : async(req,res) => {
+        // console.log(req.body)
+
         let savePost = {}
         savePost = Object.assign({} , req.body)
+
         if(req.file){   
             savePost.content = fs.readFileSync(req.file.path , 'utf8')
         }
@@ -66,11 +70,12 @@ module.exports = {
         savePostModel.fileName = savePost.fileName
         savePostModel.tags = JSON.parse(savePost.tags)
         savePostModel.description = savePost.description
-
+        
+        if(+savePost.package > 0){
         const savePostPackage = await packagesModel.findOne({key : +savePost.package})
         savePostModel.packageName = savePostPackage.name
         savePostModel.packageColor = savePostPackage.color
-
+        }
         savePostModel.key = await findKey(savedPostsModel)
         // save
 

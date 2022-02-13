@@ -13,7 +13,15 @@ app.use(express.json())
 app.use(cors())
 // app.use(fileUpload())
 
-const {getPosts , getPost, getPostsByPackage , getSavedPosts, getPinnedPosts , getPackages , getPackage , getUserInfo} = require('./router/getInfos')
+const {getPosts , 
+    getPost, 
+    getPostsByPackage , 
+    getSavedPosts, 
+    getSavedPost,
+    getPinnedPosts , 
+    getPackages , 
+    getPackage , 
+    getUserInfo} = require('./router/getInfos')
 const {postPost , postPackage, postSavePost , postPinned} = require('./router/postInfos')
 
 const dbConfig = require('./controller/dbConfig')
@@ -24,6 +32,7 @@ app.use(getPosts)
 app.use(getPost)
 app.use(getPostsByPackage)
 app.use(getSavedPosts)
+app.use(getSavedPost)
 app.use(getPinnedPosts)
 app.use(getPackages)
 app.use(getPackage)

@@ -8,7 +8,7 @@ const savedPostsModel = require('../models/savedPostsModel')
 
 module.exports = {
     getPosts : async(req,res) => {
-        res.send(await postsModel.find())
+        res.send((await postsModel.find()).reverse())
     },
 
     getPost : async(req,res) => {
@@ -19,7 +19,10 @@ module.exports = {
     },
 
     getSavedPosts : async(req,res) => {
-        res.send(await savedPostsModel.find())
+        res.send((await savedPostsModel.find()).reverse())
+    },
+    getSavedPost : async(req,res) => {
+        res.send(await savedPostsModel.findOne({key : +req.params.key}))
     },
 
     getPinnedPosts : async(req,res) => {
@@ -38,7 +41,7 @@ module.exports = {
     },
 
     getPackages : async(req,res) => {
-        res.send(await packagesModel.find())
+        res.send((await packagesModel.find()).reverse())
     },
     getPackage: async(req,res) =>{
         res.send(await packagesModel.findOne({key : +req.params.key}))
