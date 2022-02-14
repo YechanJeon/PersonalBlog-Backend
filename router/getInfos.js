@@ -8,6 +8,7 @@ module.exports = {
     getPosts : router.get('/posts' , getInfos.getPosts),
     getPost : router.get('/post/:key' , getInfos.getPost),
     getPostsByPackage : router.get('/packagePost/:package' , getInfos.getPostsByPackage),
+    getPostsByTag : router.get('/tagPosts/:tag' , getInfos.getPostsByTag),
     getSavedPosts : router.get('/savedPosts' , getInfos.getSavedPosts),
     getSavedPost : router.get('/savedPost/:key' , getInfos.getSavedPost),
     getPinnedPosts : router.get('/pinnedPost' , getInfos.getPinnedPosts),

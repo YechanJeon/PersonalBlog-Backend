@@ -16,6 +16,7 @@ app.use(cors())
 const {getPosts , 
     getPost, 
     getPostsByPackage , 
+    getPostsByTag ,
     getSavedPosts, 
     getSavedPost,
     getPinnedPosts , 
@@ -33,6 +34,7 @@ dbConfig()
 app.use(getPosts)
 app.use(getPost)
 app.use(getPostsByPackage)
+app.use(getPostsByTag)
 app.use(getSavedPosts)
 app.use(getSavedPost)
 app.use(getPinnedPosts)

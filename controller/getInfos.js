@@ -17,6 +17,18 @@ module.exports = {
     getPostsByPackage : async (req,res) => {
         res.send(await postsModel.find({package : req.params.package}))
     },
+    getPostsByTag: async  (req,res) => {
+        let posts = []
+        await (await postsModel.find()).map(e => {
+            if(e.tags.find(tag => tag.name === req.params.tag)){
+                posts.push(e)
+            }
+            
+        })
+        res.send(posts)
+    }
+
+    ,
 
     getSavedPosts : async(req,res) => {
         res.send((await savedPostsModel.find()).reverse())
