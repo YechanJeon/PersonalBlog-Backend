@@ -13,5 +13,6 @@ module.exports = {
     getPinnedPosts : router.get('/pinnedPost' , getInfos.getPinnedPosts),
     getPackages : router.get('/packages' , getInfos.getPackages),
     getPackage : router.get('/package/:key' , getInfos.getPackage),
-    getUserInfo : router.get('userInfo/:userId' , getInfos.getUserInfo)
+    getUserInfo : router.get('userInfo/:userId' , getInfos.getUserInfo),
+    getTags : router.get('/tags' , getInfos.getTags)
 }

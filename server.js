@@ -21,7 +21,9 @@ const {getPosts ,
     getPinnedPosts , 
     getPackages , 
     getPackage , 
-    getUserInfo} = require('./router/getInfos')
+    getUserInfo,
+    getTags
+} = require('./router/getInfos')
 const {postPost , postPackage, postSavePost , postPinned} = require('./router/postInfos')
 
 const dbConfig = require('./controller/dbConfig')
@@ -37,6 +39,7 @@ app.use(getPinnedPosts)
 app.use(getPackages)
 app.use(getPackage)
 app.use(getUserInfo)
+app.use(getTags)
 
 app.use(postPost)
 app.use(postSavePost)

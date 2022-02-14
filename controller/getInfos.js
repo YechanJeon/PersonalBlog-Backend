@@ -51,4 +51,19 @@ module.exports = {
         res.send(await userInfoModel.findOne({userId : req.params.userId}))
     },
 
+    getTags : async(req,res) => {
+        let tags = [];
+        (await postsModel.find()).map(e => {
+            e.tags.map(e => {
+                if(e.name){
+                    
+                    if(!tags.find(ele => ele === e.name)){
+                        tags.push(e.name)
+                    }
+                }
+            })
+        })
+        res.send(tags)
+    }
+
 }
