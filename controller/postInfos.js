@@ -6,7 +6,7 @@ const packagesModel = require('../models/packagesModel')
 const findKey = require('../controller/findKey')
 
 const fs = require('fs')
-
+    
 
 module.exports = {
     postPost : async (req,res) => {
@@ -141,6 +141,19 @@ module.exports = {
                         ok : 1
                     })
                 }
+            })
+        }
+    },
+    postImage : async (req,res) => {
+        if(req.file){
+            res.send({
+                ok : 1,
+                img : req.file.filename
+            })
+        }else{
+            res.send({
+                ok : 0,
+                msg : '이미지 미업로드'
             })
         }
     }

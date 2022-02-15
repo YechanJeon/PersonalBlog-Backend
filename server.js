@@ -48,6 +48,7 @@ app.use(postSavePost)
 app.use(postPackage)
 app.use(postPinned)
 
+app.use('/image' , express.static('image'))
 
 // 
 
