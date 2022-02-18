@@ -45,7 +45,6 @@ module.exports = {
 
         res.send(await Promise.all(pinnedPostsModelFind.map(async (e) => {
             let pinnedPost = await postsModel.findOne({key : e["post-key"]})
-            pinnedPost.key = e.key
             return pinnedPost
         })))
         
@@ -76,6 +75,10 @@ module.exports = {
             })
         })
         res.send(tags)
+    },
+
+    getPinnedCheck : async(req,res) => {
+        (await pinnedPostsModel.findOne({"post-key" : +req.params.postKey})) ? res.send(true) : res.send(false)
     }
 
 }

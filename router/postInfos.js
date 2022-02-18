@@ -12,7 +12,7 @@ const imageStroage = multer.diskStorage({
         callback(null , 'Image/');
     },
     filename : (req,file,callback) => {
-        callback(null , `${req.body.imageName}.${file.mimetype.split('/')[1]}`)//${nowDate}
+        callback(null , `${Date.now()}.${file.mimetype.split('/')[1]}`)//${nowDate}
     }
 })
 

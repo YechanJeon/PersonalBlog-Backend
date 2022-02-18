@@ -13,7 +13,8 @@ app.use(express.json())
 app.use(cors())
 // app.use(fileUpload())
 
-const {getPosts , 
+const {
+    getPosts , 
     getPost, 
     getPostsByPackage , 
     getPostsByTag ,
@@ -23,9 +24,24 @@ const {getPosts ,
     getPackages , 
     getPackage , 
     getUserInfo,
-    getTags
+    getTags,
+    getPinnedCheck
 } = require('./router/getInfos')
-const {postPost , postPackage, postSavePost , postPinned} = require('./router/postInfos')
+
+
+const {
+    postPost , 
+    postPackage, 
+    postSavePost , 
+    postPinned
+} = require('./router/postInfos')
+
+const {
+    removePinned,
+    removeSavedPost,
+    removePost,
+    removePackage
+} = require('./router/updateInfos')
 
 const dbConfig = require('./controller/dbConfig')
 
@@ -42,11 +58,17 @@ app.use(getPackages)
 app.use(getPackage)
 app.use(getUserInfo)
 app.use(getTags)
+app.use(getPinnedCheck)
 
 app.use(postPost)
 app.use(postSavePost)
 app.use(postPackage)
 app.use(postPinned)
+
+app.use(removePinned)
+app.use(removeSavedPost)
+app.use(removePost)
+app.use(removePackage)
 
 app.use('/image' , express.static('image'))
 

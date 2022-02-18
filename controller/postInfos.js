@@ -127,7 +127,7 @@ module.exports = {
                 msg : '저장할 postkey를 작성해주세요.'
             })
         }else{
-            newPinned['post-key'] = req.body['post-key']
+            newPinned['post-key'] = +req.body['post-key']
             newPinned.key = await findKey(pinnedPostsModel)
             newPinned.save(err => {
                 if(err){
