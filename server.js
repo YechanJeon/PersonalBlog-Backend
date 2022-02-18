@@ -40,7 +40,9 @@ const {
     removePinned,
     removeSavedPost,
     removePost,
-    removePackage
+    removePackage,
+    updatePost, 
+    updatePackage
 } = require('./router/updateInfos')
 
 const dbConfig = require('./controller/dbConfig')
@@ -69,6 +71,8 @@ app.use(removePinned)
 app.use(removeSavedPost)
 app.use(removePost)
 app.use(removePackage)
+app.use(updatePost)
+app.use(updatePackage)
 
 app.use('/image' , express.static('image'))
 

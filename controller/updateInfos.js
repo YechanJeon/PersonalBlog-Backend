@@ -42,6 +42,20 @@ module.exports = {
             })
         }
     },
+    updatePost : async (req,res) => {
+        // console.log(req.body.key)
+        // console.log(req.body.post)
+        let editedPost = Object.assign({} , req.body.post)
+
+        const packageInfo = await packagesModel.findOne({key : +editedPost.package})
+        editedPost.packageName = packageInfo.name
+        editedPost.packageColor = packageInfo.color
+
+        // console.log(editedPost)
+
+        // //title description tags content package (color / name)
+        await postsModel.updateOne({'key' : +req.body.key} , editedPost)
+    },
     removePackage : async (req,res) => {
         if((await (await packagesModel.deleteOne({'key' : +req.body.key})).deletedCount) === 1){
             res.send({
@@ -53,5 +67,11 @@ module.exports = {
                 msg : '존재하지 않는 프로젝트'
             })
         }
-    }
+    },
+    updatePackage : async (req,res) => {
+        req.body.key
+        
+        await packagesModel.updateOne({'key' : req.body.key} , req.body.package)
+    },
+    
 }
