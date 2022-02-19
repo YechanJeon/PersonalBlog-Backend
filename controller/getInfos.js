@@ -8,14 +8,26 @@ const savedPostsModel = require('../models/savedPostsModel')
 
 module.exports = {
     getPosts : async(req,res) => {
-        res.send((await postsModel.find()).reverse())
+        let posts = ((await postsModel.find()).reverse())
+
+        res.send(await Promise.all(posts.map(async (e) => {
+            e.package = (await packagesModel.findOne({key : +e.package}))
+            return e
+        })))
+
     },
 
     getPost : async(req,res) => {
-        res.send(await postsModel.findOne({key : +req.params.key}))
+        let post = await postsModel.findOne({key : +req.params.key})
+        post.package = await packagesModel.findOne({key : post.package})
+        res.send(post)
     },
     getPostsByPackage : async (req,res) => {
-        res.send(await postsModel.find({package : req.params.package}))
+        let posts = (await postsModel.find({package : req.params.package})).reverse()
+        res.send(await Promise.all(posts.map(async (e) => {
+            e.package = (await packagesModel.findOne({key : +e.package}))
+            return e
+        })))
     },
     getPostsByTag: async  (req,res) => {
         let posts = []
@@ -25,16 +37,26 @@ module.exports = {
             }
             
         })
-        res.send(posts)
+        res.send(await Promise.all(posts.map(async (e) => {
+            e.package = (await packagesModel.findOne({key : +e.package}))
+            return e
+        })))
     }
 
     ,
 
     getSavedPosts : async(req,res) => {
-        res.send((await savedPostsModel.find()).reverse())
+        let posts = (await savedPostsModel.find()).reverse()
+
+        res.send(await Promise.all(posts.map(async (e) => {
+            e.package = (await packagesModel.findOne({key : +e.package}))
+            return e
+        })))
     },
     getSavedPost : async(req,res) => {
-        res.send(await savedPostsModel.findOne({key : +req.params.key}))
+        let post = (await savedPostsModel.findOne({key : +req.params.key}))
+        post.package = await packagesModel.findOne({key : post.package})
+        res.send(post)
     },
 
     getPinnedPosts : async(req,res) => {
@@ -43,11 +65,15 @@ module.exports = {
 
         const pinnedPostsModelFind = await pinnedPostsModel.find()
 
-        res.send(await Promise.all(pinnedPostsModelFind.map(async (e) => {
+        let posts = (await Promise.all(pinnedPostsModelFind.map(async (e) => {
             let pinnedPost = await postsModel.findOne({key : e["post-key"]})
             return pinnedPost
         })))
-        
+
+        res.send(await Promise.all(posts.map(async (e) => {
+            e.package = (await packagesModel.findOne({key : +e.package}))
+            return e
+        }))) 
 
     },
 
