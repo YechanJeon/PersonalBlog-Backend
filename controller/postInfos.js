@@ -10,8 +10,6 @@ const fs = require('fs')
 
 module.exports = {
     postPost : async (req,res) => {
-        console.log(req.body)
-
         let newPost = new postsModel
         if(req.body.title === ''&&req.body.package === ''){
             res.status(400).json({
@@ -49,8 +47,6 @@ module.exports = {
 
     },
     postSavePost : async(req,res) => {
-        console.log(req.body)
-
         let savePost = {}
         savePost = Object.assign({} , req.body)
 
@@ -59,8 +55,12 @@ module.exports = {
         }
         let savePostModel = new savedPostsModel
 
-
-        savePostModel.title = savePost.title
+        if(savePost.title !== ''){
+            savePostModel.title = savePost.title
+        }else{
+            let now = new Date()
+            savePostModel.title  = `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일 ${now.getHours()}시 ${now.getMinutes()}분 저장된 게시글`
+        }
         savePostModel.package = savePost.package
         savePostModel.content = savePost.content
         savePostModel.fileName = savePost.fileName
