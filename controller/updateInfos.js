@@ -69,7 +69,7 @@ module.exports = {
         }
     },
     updatePackage : async (req,res) => {
-        req.body.key
+        // req.body.key
         
         await packagesModel.updateOne({'key' : req.body.key} , req.body.package)
     },

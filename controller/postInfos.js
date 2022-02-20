@@ -28,10 +28,6 @@ module.exports = {
             newPost.package = req.body.package
             newPost.tags = JSON.parse(req.body.tags)
             newPost.description = req.body.description
-            
-            const newPostPackage = await packagesModel.findOne({key : +req.body.package})
-            newPost.packageName = newPostPackage.name
-            newPost.packageColor = newPostPackage.color
 
             newPost.key = await findKey(postsModel)
             newPost.date = new Date()
@@ -53,7 +49,7 @@ module.exports = {
 
     },
     postSavePost : async(req,res) => {
-        // console.log(req.body)
+        console.log(req.body)
 
         let savePost = {}
         savePost = Object.assign({} , req.body)
@@ -71,11 +67,6 @@ module.exports = {
         savePostModel.tags = JSON.parse(savePost.tags)
         savePostModel.description = savePost.description
         
-        if(+savePost.package > 0){
-        const savePostPackage = await packagesModel.findOne({key : +savePost.package})
-        savePostModel.packageName = savePostPackage.name
-        savePostModel.packageColor = savePostPackage.color
-        }
         savePostModel.key = await findKey(savedPostsModel)
         // save
 

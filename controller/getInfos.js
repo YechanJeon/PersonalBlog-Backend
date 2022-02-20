@@ -49,13 +49,22 @@ module.exports = {
         let posts = (await savedPostsModel.find()).reverse()
 
         res.send(await Promise.all(posts.map(async (e) => {
-            e.package = (await packagesModel.findOne({key : +e.package}))
+            if(e.package > 0){
+                e.package = (await packagesModel.findOne({key : +e.package}))
             return e
+            }else{
+                e.package = {key : 0}
+                return e
+            }
         })))
     },
     getSavedPost : async(req,res) => {
         let post = (await savedPostsModel.findOne({key : +req.params.key}))
-        post.package = await packagesModel.findOne({key : post.package})
+        if(post.package !== '0'){
+            post.package = await packagesModel.findOne({key : +post.package})
+        }else{
+            post.package = {key : 0}
+        }
         res.send(post)
     },
 
