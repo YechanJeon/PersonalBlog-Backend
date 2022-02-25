@@ -23,7 +23,7 @@ module.exports = {
                 newPost.content = req.body.content
             }
             newPost.title = req.body.title 
-            newPost.package = req.body.package
+            newPost.package = +req.body.package
             newPost.tags = JSON.parse(req.body.tags)
             newPost.description = req.body.description
 

@@ -19,11 +19,14 @@ module.exports = {
 
     getPost : async(req,res) => {
         let post = await postsModel.findOne({key : +req.params.key})
-        post.package = await packagesModel.findOne({key : post.package})
+        post.packageName = (await packagesModel.findOne({key : +post.package})).name
+        post.packageColor = (await packagesModel.findOne({key : +post.package})).color
+        post.package = await packagesModel.findOne({key : +post.package})
+        
         res.send(post)
     },
     getPostsByPackage : async (req,res) => {
-        let posts = (await postsModel.find({package : req.params.package})).reverse()
+        let posts = (await postsModel.find({package : +req.params.package})).reverse()
         res.send(await Promise.all(posts.map(async (e) => {
             e.package = (await packagesModel.findOne({key : +e.package}))
             return e

@@ -47,10 +47,6 @@ module.exports = {
         // console.log(req.body.post)
         let editedPost = Object.assign({} , req.body.post)
 
-        const packageInfo = await packagesModel.findOne({key : +editedPost.package})
-        editedPost.packageName = packageInfo.name
-        editedPost.packageColor = packageInfo.color
-
         // console.log(editedPost)
 
         // //title description tags content package (color / name)
