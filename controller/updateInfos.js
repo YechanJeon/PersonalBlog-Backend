@@ -50,7 +50,13 @@ module.exports = {
         // console.log(editedPost)
 
         // //title description tags content package (color / name)
-        await postsModel.updateOne({'key' : +req.body.key} , editedPost)
+        await postsModel.updateOne({'key' : +req.body.key} , editedPost , err => {
+            if(err){
+                res.status(400)
+            }else{
+                res.status(200)
+            }
+        })
     },
     removePackage : async (req,res) => {
         if((await (await packagesModel.deleteOne({'key' : +req.body.key})).deletedCount) === 1){
@@ -67,7 +73,13 @@ module.exports = {
     updatePackage : async (req,res) => {
         // req.body.key
         
-        await packagesModel.updateOne({'key' : req.body.key} , req.body.package)
+        await packagesModel.updateOne({'key' : req.body.key} , req.body.package , err => {
+            if(err){
+                res.status(400)
+            }else{
+                res.status(200)
+            }
+        })
     },
     
 }
