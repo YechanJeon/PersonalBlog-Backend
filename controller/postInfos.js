@@ -139,10 +139,10 @@ module.exports = {
         if(req.file){
             res.send({
                 ok : 1,
-                img : req.file.filename
+                img : req.file.key
             })
         }else{
-            res.send({
+            res.status(400).send({
                 ok : 0,
                 msg : '이미지 미업로드'
             })
